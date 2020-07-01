@@ -21,7 +21,7 @@ import csv
 from scapy.all import *
 import random
 from ipaddress import IPv4Network, IPv4Address
-
+import datetime
 #velko added
 
 from scapy.compat import plain_str
@@ -299,7 +299,7 @@ def _generateICMPtype():
 '''
 def __gen_send_mod(s, x, inter=0, loop=0, count=None, verbose=None, realtime=None, return_packets=False,
                port_random_flag=False, size_random_flag=False, src_random_flag=False, specific_subnet_random=False,
-               source_addr='Default',pcktcount=None, *args, **kargs):  # noqa: E501
+               source_addr='Default', pcktcount=None, log=None , *args, **kargs):  # noqa: E501
     totaltimeelapsedns = 0.0
     totaltimeelapseds = 0.0
     if isinstance(x, str):
@@ -365,7 +365,8 @@ def __gen_send_mod(s, x, inter=0, loop=0, count=None, verbose=None, realtime=Non
                     print("TOTAL TIME(ns): %.9f" % float(totaltimeelapsedns))
                     print("TOTAL TIME(s): ", totaltimeelapseds)
                     print("+++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
-                    file_name = './timestamp.log'
+
+                    file_name=log # +"/flooder"+'{:%Y-%m-%d_%H:%M:%S}'.format(datetime.datetime.now())+".log"
                     f = open(file_name, 'a+')
                     f.write("\n\n\n+++++++++++++++++TIMESTAMP+++++++++++++++++++++++++++\nNumber of sent packages: "+str(n)+"\n")
                     f.write("TIME(ns): %f\n" % float(endVelko - startVelko))
@@ -399,7 +400,7 @@ def __gen_send_mod(s, x, inter=0, loop=0, count=None, verbose=None, realtime=Non
 def send_mod(x, inter=0, loop=0, count=None,
          verbose=None, realtime=None,
          return_packets=False, socket=None, port_random_flag=False, size_random_flag=False,
-         src_random_flag=False, specific_subnet_random=False,pcktcount=None, source_addr='Default', *args, **kargs):
+         src_random_flag=False, specific_subnet_random=False,pcktcount=None,log=None, source_addr='Default', *args, **kargs):
     """Send packets at layer 3
 send(packets, [inter=0], [loop=0], [count=None], [verbose=conf.verb], [realtime=None], [return_packets=False],  # noqa: E501
      [socket=None]) -> None"""
@@ -410,7 +411,7 @@ send(packets, [inter=0], [loop=0], [count=None], [verbose=conf.verb], [realtime=
                          count=count, verbose=verbose,
                          realtime=realtime, return_packets=return_packets, size_random_flag=size_random_flag,
                          port_random_flag=port_random_flag, src_random_flag=src_random_flag,
-                         specific_subnet_random=specific_subnet_random,pcktcount=pcktcount, source_addr=source_addr)
+                         specific_subnet_random=specific_subnet_random,pcktcount=pcktcount,log=log, source_addr=source_addr)
     if need_closing:
         socket.close()
     return results

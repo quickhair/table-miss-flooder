@@ -1,3 +1,6 @@
 *.log
 icmp_resources
 tmp_sendrecv.py
+.iws
+workspace.xml
+

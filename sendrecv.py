@@ -316,7 +316,7 @@ def __gen_send_mod(s, x, inter=0, loop=0, count=None, verbose=None, realtime=Non
     if return_packets:
         sent_packets = PacketList()
     try:
-        startVelko = time.time_ns()
+        #startVelko = time.time_ns()
         startVelkoSec = time.time()
         checkafter = 0  # THIS NEED TO BE IMPLEMENTED AS A FLAG
         while loop:
@@ -354,24 +354,27 @@ def __gen_send_mod(s, x, inter=0, loop=0, count=None, verbose=None, realtime=Non
                         print("Something is wrong!sendrcv ")
 
                 if((n % int(pcktcount)) == 0):
-                    endVelko = time.time_ns()
+                    #endVelko = time.time_ns()
                     endVelkoSec=time.time()
-                    totaltimeelapsedns+=(endVelko-startVelko)
+                    #totaltimeelapsedns+=(endVelko-startVelko)
                     totaltimeelapseds+=(endVelkoSec-startVelkoSec)
+
                     print("\n\n\n+++++++++++++++++TIMESTAMP+++++++++++++++++++++++++++\nNumber of sent packages: ",n)
                     #print("TIMESTAMP(ns): ",endVelko-startVelko)
-                    print("TIME(ns): %.9f" % float(endVelko - startVelko))
+                    #print("TIME(ns): %.9f" % float(endVelko - startVelko))
                     print("TIME(s): ", (endVelkoSec-startVelkoSec))
-                    print("TOTAL TIME(ns): %.9f" % float(totaltimeelapsedns))
+                    print("TIME(ns): ", (endVelkoSec - startVelkoSec)*1000000000)
+                    #print("TOTAL TIME(ns): %.9f" % float(totaltimeelapsedns))
                     print("TOTAL TIME(s): ", totaltimeelapseds)
                     print("+++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
 
                     file_name=log # +"/flooder"+'{:%Y-%m-%d_%H:%M:%S}'.format(datetime.datetime.now())+".log"
                     f = open(file_name, 'a+')
                     f.write("\n\n\n+++++++++++++++++TIMESTAMP+++++++++++++++++++++++++++\nNumber of sent packages: "+str(n)+"\n")
-                    f.write("TIME(ns): %f\n" % float(endVelko - startVelko))
+                    #f.write("TIME(ns): %f\n" % float(endVelko - startVelko))
+                    f.write("TIME(ns): "+str((endVelkoSec - startVelkoSec)*1000000000)+"\n")
                     f.write("TIME(s): "+ str(endVelkoSec-startVelkoSec)+"\n")
-                    f.write("TOTAL TIME(ns): %f\n" % float(totaltimeelapsedns))
+                    #f.write("TOTAL TIME(ns): %f\n" % float(totaltimeelapsedns))
                     f.write("TOTAL TIME(s): "+str(totaltimeelapseds)+"\n")
                     f.close()
 

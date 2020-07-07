@@ -359,11 +359,11 @@ def __gen_send_mod(s, x, inter=0, loop=0, count=None, verbose=None, realtime=Non
                     #totaltimeelapsedns+=(endVelko-startVelko)
                     totaltimeelapseds+=(endVelkoSec-startVelkoSec)
 
-                    print("\n\n\n+++++++++++++++++TIMESTAMP+++++++++++++++++++++++++++\nNumber of sent packages: ",n)
+                    print("\n+++TIMESTAMP+++\nTimestamp taken after:",n,"packets")
                     #print("TIMESTAMP(ns): ",endVelko-startVelko)
                     #print("TIME(ns): %.9f" % float(endVelko - startVelko))
-                    print('{:%Y-%m-%d_%H:%M:%S}'.format(datetime.datetime.now())+"\n")
-                    print((datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S.%f')[:-4]+"\n")
+                    #print('{:%Y-%m-%d_%H:%M:%S}'.format(datetime.datetime.now())+"\n")
+                    print((datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S.%f')[:-2]+" (UTC)\n")
                     print("TIME(s): ", (endVelkoSec-startVelkoSec))
                     print("TIME(ns): ", (endVelkoSec - startVelkoSec)*1000000000)
                     #print("TOTAL TIME(ns): %.9f" % float(totaltimeelapsedns))
@@ -372,10 +372,10 @@ def __gen_send_mod(s, x, inter=0, loop=0, count=None, verbose=None, realtime=Non
 
                     file_name=log # +"/flooder"+'{:%Y-%m-%d_%H:%M:%S}'.format(datetime.datetime.now())+".log"
                     f = open(file_name, 'a+')
-                    f.write("\n\n\n+++++++++++++++++TIMESTAMP+++++++++++++++++++++++++++\nNumber of sent packages: "+str(n)+"\n")
+                    f.write("\n+++TIMESTAMP+++\nTimestamp taken after: "+str(n)+"\n")
                     #f.write("TIME(ns): %f\n" % float(endVelko - startVelko))
-                    f.write('{:%Y-%m-%d_%H:%M:%S}'.format(datetime.datetime.now())+"\n")
-                    f.write(datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-4]+"\n")
+                    #f.write('{:%Y-%m-%d_%H:%M:%S}'.format(datetime.datetime.now())+"\n")
+                    f.write(datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-2]+" (UTC)\n")
                     f.write("TIME(ns): "+str((endVelkoSec - startVelkoSec)*1000000000)+"\n")
                     f.write("TIME(s): "+ str(endVelkoSec-startVelkoSec)+"\n")
                     #f.write("TOTAL TIME(ns): %f\n" % float(totaltimeelapsedns))

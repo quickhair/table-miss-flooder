@@ -297,6 +297,17 @@ def _generateICMPtype():
             line_count += 1
     print(f'Processed {line_count} lines.')
 '''
+# log each packet to a file
+def log_packet(p,log_file):
+
+    packet_log_file="packet_info_"+log_file[2:]
+    f = open(packet_log_file,"a+")
+    f.write(datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-2] + " (UTC)\n")
+    a=p.show(dump=True)
+    f.write(str(a))
+    f.write("\n")
+    f.close()
+
 def __gen_send_mod(s, x, inter=0, loop=0, count=None, verbose=None, realtime=None, return_packets=False,
                port_random_flag=False, size_random_flag=False, src_random_flag=False, specific_subnet_random=False,
                source_addr='Default', pcktcount=None, log=None , *args, **kargs):  # noqa: E501
@@ -316,9 +327,7 @@ def __gen_send_mod(s, x, inter=0, loop=0, count=None, verbose=None, realtime=Non
     if return_packets:
         sent_packets = PacketList()
     try:
-        #startVelko = time.time_ns()
         startVelkoSec = time.time()
-        checkafter = 0  # THIS NEED TO BE IMPLEMENTED AS A FLAG
         while loop:
             dt0 = None
             for p in x:
@@ -330,7 +339,7 @@ def __gen_send_mod(s, x, inter=0, loop=0, count=None, verbose=None, realtime=Non
                             time.sleep(st)
                     else:
                         dt0 = ct - p.time
-                # print(str(specific_subnet_random))
+
                 if(p.proto==1):
                     p.type=int(random.randrange(0,255))
                     p.code=int(random.randrange(0,255))
@@ -345,7 +354,6 @@ def __gen_send_mod(s, x, inter=0, loop=0, count=None, verbose=None, realtime=Non
                     p.src = socket.inet_ntoa(struct.pack('>I', random.randint(1, 0xffffffff)))
                 elif (specific_subnet_random):
                     try:
-                        # print("LALLALALALALALALALALA"+source_addr)
                         subnet = IPv4Network(source_addr)
                         bits = random.getrandbits(subnet.max_prefixlen - subnet.prefixlen)
                         p.src = str(IPv4Address(subnet.network_address + bits))
@@ -354,36 +362,30 @@ def __gen_send_mod(s, x, inter=0, loop=0, count=None, verbose=None, realtime=Non
                         print("Something is wrong!sendrcv ")
 
                 if((n % int(pcktcount)) == 0):
-                    #endVelko = time.time_ns()
+
                     endVelkoSec=time.time()
-                    #totaltimeelapsedns+=(endVelko-startVelko)
                     totaltimeelapseds+=(endVelkoSec-startVelkoSec)
 
                     print("\n+++TIMESTAMP+++\nTimestamp taken after:",n,"packets")
-                    #print("TIMESTAMP(ns): ",endVelko-startVelko)
-                    #print("TIME(ns): %.9f" % float(endVelko - startVelko))
+
                     #print('{:%Y-%m-%d_%H:%M:%S}'.format(datetime.datetime.now())+"\n")
                     print((datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S.%f')[:-2]+" (UTC)\n")
                     print("TIME(s): ", (endVelkoSec-startVelkoSec))
                     print("TIME(ns): ", (endVelkoSec - startVelkoSec)*1000000000)
-                    #print("TOTAL TIME(ns): %.9f" % float(totaltimeelapsedns))
                     print("TOTAL TIME(s): ", totaltimeelapseds)
                     print("+++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
 
-                    file_name=log # +"/flooder"+'{:%Y-%m-%d_%H:%M:%S}'.format(datetime.datetime.now())+".log"
+                    file_name=log
                     f = open(file_name, 'a+')
                     f.write("\n+++TIMESTAMP+++\nTimestamp taken after: "+str(n)+"\n")
-                    #f.write("TIME(ns): %f\n" % float(endVelko - startVelko))
-                    #f.write('{:%Y-%m-%d_%H:%M:%S}'.format(datetime.datetime.now())+"\n")
                     f.write(datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-2]+" (UTC)\n")
                     f.write("TIME(ns): "+str((endVelkoSec - startVelkoSec)*1000000000)+"\n")
                     f.write("TIME(s): "+ str(endVelkoSec-startVelkoSec)+"\n")
-                    #f.write("TOTAL TIME(ns): %f\n" % float(totaltimeelapsedns))
                     f.write("TOTAL TIME ELAPSED(s): "+str(totaltimeelapseds)+"\n")
                     f.close()
-
+                # TODO: Should log only if log is activated
+                log_packet(p,log)
                 s.send(p)
-                #print("\nSource: " + str(p.src) + "\n" + "DestPort: " + str(p.dport))
                 print("\n====================WHOLE PACKET=====================\n")
                 print(p.show)
                 # time.sleep(5)

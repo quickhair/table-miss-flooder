@@ -300,7 +300,7 @@ def _generateICMPtype():
 # log each packet to a file
 def log_packet(p,log_file):
 
-    packet_log_file="packet_info_"+log_file[2:]
+    packet_log_file=log_file+".PACKETS"
     f = open(packet_log_file,"a+")
     f.write(datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-2] + " (UTC)\n")
     a=p.show(dump=True)
@@ -384,6 +384,7 @@ def __gen_send_mod(s, x, inter=0, loop=0, count=None, verbose=None, realtime=Non
                     f.write("TOTAL TIME ELAPSED(s): "+str(totaltimeelapseds)+"\n")
                     f.close()
                 # TODO: Should log only if log is activated
+
                 log_packet(p,log)
                 s.send(p)
                 print("\n====================WHOLE PACKET=====================\n")

@@ -302,7 +302,7 @@ def log_packet(p,log_file):
 
     packet_log_file=log_file+".PACKETS"
     f = open(packet_log_file,"a+")
-    f.write(datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-2] + " (UTC)\n")
+    f.write(datetime.datetime.utcnow().strftime('%Y-%m-%d %H-%M-%S_%f')[:-2] + " (UTC)\n")
     a=p.show(dump=True)
     f.write(str(a))
     f.write("\n")
@@ -378,10 +378,13 @@ def __gen_send_mod(s, x, inter=0, loop=0, count=None, verbose=None, realtime=Non
                     file_name=log
                     f = open(file_name, 'a+')
                     f.write("\n+++TIMESTAMP+++\nTimestamp taken after: "+str(n)+"\n")
-                    f.write(datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-2]+" (UTC)\n")
+                    f.write(datetime.datetime.utcnow().strftime('%Y-%m-%d %H-%M-%S_%f')[:-2]+" (UTC)\n")
                     f.write("TIME(ns): "+str((endVelkoSec - startVelkoSec)*1000000000)+"\n")
                     f.write("TIME(s): "+ str(endVelkoSec-startVelkoSec)+"\n")
                     f.write("TOTAL TIME ELAPSED(s): "+str(totaltimeelapseds)+"\n")
+                    f.write("\n===WholePacket===\n")
+                    tmp=p.show(dump=True)
+                    f.write(str(tmp))
                     f.close()
                 # TODO: Should log only if log is activated
 

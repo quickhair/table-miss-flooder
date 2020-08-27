@@ -1,14 +1,8 @@
 #! /usr/bin/env python
-# Base for the tool borowed from: https://github.com/celefthe/udp-flooder
-import socket
-import sys
-import random
-import os
+# Base for the tool borrowed from: https://github.com/celefthe/udp-flooder
 
 # print(os.sys.path)
 from scapy.all import *
-import scapy
-from scapy import *
 import re
 # from random import getrandbits
 from ipaddress import IPv4Network, IPv4Address

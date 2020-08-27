@@ -12,6 +12,7 @@ DEFAULT_CHKSUM = 0
 DEFAULT_PORT = 53
 DEFAULT_REQUEST_NUM = -1
 DEFAULT_TCP_FLAG = "S"
+#TODO
 # Not implemented but would be cool if it gets implemented
 # The idea: Give option for user to specify ICMP type and
 # code and allso add a flag for random ICMP generation Right now, there are .csv file in a folder icmp_resources not

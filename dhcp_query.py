@@ -11,13 +11,17 @@ from random import randint
 
 def getMacInBytes():
     mac = str(hex(get_mac()))
+    print("get_mac:", get_mac())
+    print("MAC hex:", mac)
     mac = mac[2:]
+    print("MAC ADDR:", mac)
     while len(mac) < 12:
         mac = '0' + mac
     macb = b''
     for i in range(0, 12, 2):
         m = int(mac[i:i + 2], 16)
         macb += struct.pack('!B', m)
+    print("MAC bytes:", macb)
     return macb
 
 
@@ -97,6 +101,7 @@ class DHCPOffer:
 
 if __name__ == '__main__':
     # defining the socket
+    getMacInBytes()
     dhcps = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # internet, UDP
     dhcps.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)  # broadcast
 

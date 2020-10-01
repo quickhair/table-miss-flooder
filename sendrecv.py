@@ -374,21 +374,22 @@ def __gen_send_mod(s, x, inter=0, loop=0, count=None, verbose=None, realtime=Non
                     print("TIME(ns): ", (endVelkoSec - startVelkoSec)*1000000000)
                     print("TOTAL TIME(s): ", totaltimeelapseds)
                     print("+++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
-
-                    file_name=log
-                    f = open(file_name, 'a+')
-                    f.write("\n+++TIMESTAMP+++\nTimestamp taken after: "+str(n)+"\n")
-                    f.write(datetime.datetime.utcnow().strftime('%Y-%m-%d %H-%M-%S_%f')[:-2]+" (UTC)\n")
-                    f.write("TIME(ns): "+str((endVelkoSec - startVelkoSec)*1000000000)+"\n")
-                    f.write("TIME(s): "+ str(endVelkoSec-startVelkoSec)+"\n")
-                    f.write("TOTAL TIME ELAPSED(s): "+str(totaltimeelapseds)+"\n")
-                    f.write("\n===WholePacket===\n")
-                    tmp=p.show(dump=True)
-                    f.write(str(tmp))
-                    f.close()
+#LOG SECTION
+                    # file_name=log
+                    # f = open(file_name, 'a+')
+                    # f.write("\n+++TIMESTAMP+++\nTimestamp taken after: "+str(n)+"\n")
+                    # f.write(datetime.datetime.utcnow().strftime('%Y-%m-%d %H-%M-%S_%f')[:-2]+" (UTC)\n")
+                    # f.write("TIME(ns): "+str((endVelkoSec - startVelkoSec)*1000000000)+"\n")
+                    # f.write("TIME(s): "+ str(endVelkoSec-startVelkoSec)+"\n")
+                    # f.write("TOTAL TIME ELAPSED(s): "+str(totaltimeelapseds)+"\n")
+                    # f.write("\n===WholePacket===\n")
+                    # tmp=p.show(dump=True)
+                    # f.write(str(tmp))
+                    # f.close()
                 # TODO: Should log only if log is activated
 
-                log_packet(p,log)
+                #log_packet(p,log)
+#END LOG SECTION
                 s.send(p)
                 print("\n====================WHOLE PACKET=====================\n")
                 print(p.show)

@@ -391,8 +391,16 @@ def __gen_send_mod(s, x, inter=0, loop=0, count=None, verbose=None, realtime=Non
                 #log_packet(p,log)
 #END LOG SECTION
                 s.send(p)
-                print("\n====================WHOLE PACKET=====================\n")
-                print(p.show)
+                if (p.proto == 1):
+                    print(datetime.datetime.utcnow().strftime('%Y-%m-%d_%H-%M-%S_%f')[:-2] + "(UTC)\t",
+                          "proto", p.proto,
+                          "\tsrc", p.src, "\tdst", p.dst, "\tcode", p.code, "\ttype", p.type,
+                          "\tLength(b)", len(p))
+                else:
+                    print(datetime.datetime.utcnow().strftime('%Y-%m-%d_%H-%M-%S_%f')[:-2] + "(UTC)\t",
+                          "proto", p.proto,
+                          "\tsrc", p.src, "\tsport", p.sport, "\tdst", p.dst, "\tdport", p.dport,
+                          "\tLength(b)", len(p))
                 # time.sleep(5)
                 if return_packets:
                     sent_packets.append(p)

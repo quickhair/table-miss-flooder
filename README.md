@@ -1,4 +1,4 @@
-This tool is still a prototype and was written by Veljko Bozic - CUNY Graduate Center.
+This tool is still a prototype and was written by Veljko Bozic from CUNY Graduate Center.
 Email: vbozic@gradcenter.cuny.edu
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

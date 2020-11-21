@@ -1,6 +1,7 @@
-This tool is written by Veljko Bozic - CUNY
+This tool is still a prototype and was written by Veljko Bozic - CUNY Graduate Center.
+Email: vbozic@gradcenter.cuny.edu
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 Please do not judge me on sloppy coding and bad practices...
 This tool was created in a short period of time and was just made to do a specific task
